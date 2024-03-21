@@ -6,20 +6,17 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
-import Home from './Home';
-import colors from '../constants/colors';
+import {SafeAreaView, StatusBar, View, Text, StyleSheet} from 'react-native';
+
+import colors from './constants/colors';
+import StackNavigation from './navigation/StackNavigation';
+import RootNavigation from './navigation/RootNavigation';
+
 const App = () => {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
-      <StatusBar backgroundColor={colors.primary} />
-      <Home />
-    </SafeAreaView>
+    // <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
+    // <StatusBar backgroundColor={colors.primary} />
+    <RootNavigation />
   );
 };
 
