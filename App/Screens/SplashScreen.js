@@ -14,11 +14,11 @@ const SplashScreen = () => {
     <View style={styles.mainScreen}>
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.white} barStyle={'dark-content'} />
-      <FastImage
+      {/* <FastImage
         source={require('../Assets/Media/CustomIcons/logos/logo_animation.gif')}
         style={styles.logo}
         resizeMode={'contain'}
-      />
+      /> */}
     </View>
     <TouchableOpacity
     //   onPress={handleLogout}

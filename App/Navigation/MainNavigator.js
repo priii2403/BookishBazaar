@@ -5,13 +5,14 @@ import Toast from 'react-native-easy-toast';
 import { Colors } from '../Themes/AppTheme';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from '../Screens/SplashScreen';
+import LoginScreen from '../Screens/Login/LoginScreen';
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const SplashNavigator = () => {
     return (
       <Stack.Navigator
         screenOptions={{animationEnabled: false, headerShown: false}}>
-        <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        <Stack.Screen name="SplashScreen" component={LoginScreen} />
       </Stack.Navigator>
     );
   };
