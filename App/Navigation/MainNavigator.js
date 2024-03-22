@@ -6,13 +6,15 @@ import { Colors } from '../Themes/AppTheme';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from '../Screens/SplashScreen';
 import LoginScreen from '../Screens/Login/LoginScreen';
+import HomeScreen from '../Screens/Login/HomeScreen';
+import TabNavigator from './TabNavigator';
 const Stack = createStackNavigator();
 // const Drawer = createDrawerNavigator();
 const SplashNavigator = () => {
     return (
       <Stack.Navigator
         screenOptions={{animationEnabled: false, headerShown: false}}>
-        <Stack.Screen name="SplashScreen" component={LoginScreen} />
+        <Stack.Screen name="SplashScreen" component={HomeScreen} />
       </Stack.Navigator>
     );
   };
@@ -20,7 +22,8 @@ const MainNavigator = () => {
   return (
     <NavigationContainer >
     { true ? (
-      <SplashNavigator />
+      // <SplashNavigator />
+      <TabNavigator/>
     ) : !!isAuthenticated && !isLogout && !hardRestriction ? (
       <MainDrawerNavigator />
     ) : (

@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-clipboard/clipboard": "github:react-native-clipboard/clipboard",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "formik": "^2.4.5",
@@ -20,6 +21,7 @@
     "react-native-easy-toast": "^2.3.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.15.0",
+    "react-native-image-picker": "^7.1.2",
     "react-native-paper": "^5.12.3",
     "react-native-permissions": "^4.1.4",
     "react-native-reanimated": "^3.8.1",
