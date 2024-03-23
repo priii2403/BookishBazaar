@@ -56,7 +56,7 @@ export default function Index() {
         <View>
           <TouchableOpacity
             onPress={() => setcondition(item)}
-      
+    
             activeOpacity={0.5}
             style={styles.radioView}>
             <View style={styles.mRight5}>
@@ -125,7 +125,7 @@ export default function Index() {
         keyboardShouldPersistTaps={'handled'}
         overScrollMode={'never'}>
         <Formik
-          validationSchema={addAccountValidationSchema}
+          validationSchema={addBookSchema}
           initialValues={initialAddAccountForm}
           innerRef={formRef}
           onSubmit={values => handleSubmitClick(values)}>
@@ -235,7 +235,6 @@ export default function Index() {
                 onPressOne={handleSubmit}
                 // onPressTwo={toggleAlert}
               />
-              {/* <Button onPress={handleSubmit} title="Submit" /> */}
             </View>
           )}
         </Formik>
@@ -315,28 +314,17 @@ const styles = StyleSheet.create({
     // marginBottom:Metrics.rfv(0)
   },
 });
-const addAccountValidationSchema = () => {
+const addBookSchema = () => {
   return Yup.object().shape({
-    domain: Yup.string()
-      .matches(
-        /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gm,
-        'Must be a valid domain!',
-      )
-      .nullable()
-      .required(),
-    name: Yup.string().trim().required('Account Name is Required'),
-    address: Yup.string().trim(),
-    country: Yup.object().nullable(),
-    time_zone: Yup.string().trim(),
-    dnd: Yup.boolean(),
-    state: Yup.string().trim(),
-    city: Yup.string().trim(),
-    zip: Yup.number('Postal code must be a number').nullable(),
-    revenue: Yup.number().nullable(),
-    account_type: Yup.string().trim(),
-    industry: Yup.string().trim(),
-    linkedin_url: Yup.string().trim().url(),
-    twitter_url: Yup.string().trim().url(),
-    description: Yup.string().trim(),
+ 
+    BookName: Yup.string().trim(),
+    AuthorName: Yup.string().trim(),
+    BookEdition: Yup.number().nullable(),
+    BookDescription: Yup.string().trim(),
+    SelectBookCategory: Yup.string().trim(),
+    BookPrintedPrice: Yup.number().nullable(),
+    BookCondition: Yup.number().nullable(),
+    SellingOption: Yup.number().nullable(),
+    OfferedPrice: Yup.number().nullable(),
   });
 };
