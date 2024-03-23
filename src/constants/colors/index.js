@@ -2,7 +2,23 @@ export default colors = {
   primary: '#1A8BF5',
   secondary: 'green',
   black: '#000000',
-  primary_dark:'#58ceb2'
+  primary_dark:'#58ceb2',
+  greyTheme1: '#707174',
+  greyTheme2: '#ADADAD',
+  greyTheme3: '#F0F0F0',
+  blackAccent: '#111111',
+  greyTheme4: '#ADADAD',
+  greyTheme5: '#F1F1F1',
+  chatBackground: '#F7F7F7',
+  mainTheme1: '#312B47',
+  mainTheme2: '#3E4685',
+  mainTheme3: '#565FA7',
+  mainTheme4: '#D4D1EB',
+  mainTheme5: '#EEE9FD',
+  logoTheme1: '#121D3F',
+  logoTheme2: '#F67567',
+  logoTheme3: '#2CA9E1',
+  white:'#ffff'
 };
 export const bgColor = [
   '#D9EBFF',

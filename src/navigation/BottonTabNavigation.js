@@ -88,7 +88,7 @@ const BottonTabNavigation = () => (
       }}
     />
     <Tab.Screen
-      name="Post"
+      name="Add Book Details"
       component={Post}
       options={{
         tabBarIcon: ({focused}) => (
