@@ -9,7 +9,8 @@ import Post from '../screens/Post/Index';
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Metrics from '../Themes/Metrics';
-import {Colors, Fonts, FONT_SIZE} from '../Themes/AppTheme';
+import { Fonts, FONT_SIZE} from '../Themes/AppTheme';
+import colors from '../constants/colors/index';
 
 const Tab = createBottomTabNavigator();
 const CustomTabBarButton = ({children, onPress}) => (
@@ -40,7 +41,7 @@ const BottonTabNavigation = () => (
       tabBarLabelStyle: {display: 'none'},
       tabBarStyle: {
         showLabel: false,
-        tabBarActiveTintColor: '#58ceb2',
+        tabBarActiveTintColor: colors.primary_dark,
         tabBarInactiveTintColor: 'gray',
         borderRadius: 15,
         height: 90,
@@ -56,7 +57,7 @@ const BottonTabNavigation = () => (
             <IconMaterial name={'home'} size={Metrics.rfv(25)} />
             <Text
               style={{
-                color: focused ? '#1A8BF5' : Colors.black,
+                color: focused ? colors.primary : colors.black,
                 fontFamily: Fonts.Roboto400,
                 fontSize:FONT_SIZE.small
               }}>
@@ -76,7 +77,7 @@ const BottonTabNavigation = () => (
             <IconMaterial name={'person'} size={Metrics.rfv(25)} />
             <Text
               style={{
-                color: focused ? '#1A8BF5' : Colors.black,
+                color: focused ? '#1A8BF5' : colors.black,
                 fontSize:FONT_SIZE.small,
                 fontFamily: Fonts.Roboto400,
               }}>
@@ -87,7 +88,7 @@ const BottonTabNavigation = () => (
       }}
     />
     <Tab.Screen
-      name="Post"
+      name="Add Book Details"
       component={Post}
       options={{
         tabBarIcon: ({focused}) => (
@@ -113,7 +114,7 @@ const BottonTabNavigation = () => (
             />
             <Text
               style={{
-                color: focused ? '#1A8BF5' : Colors.black,
+                color: focused ? '#1A8BF5' : colors.black,
                 fontFamily: Fonts.Roboto400,
                 fontSize:FONT_SIZE.small
               }}>
@@ -131,7 +132,7 @@ const BottonTabNavigation = () => (
           <View
             style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
             <Icon name={'bookshelf'} size={Metrics.rfv(25)} />
-            <Text style={{color: focused ? '#1A8BF5' : Colors.black, fontFamily: Fonts.Roboto400,fontSize:FONT_SIZE.small}}>
+            <Text style={{color: focused ? '#1A8BF5' : colors.black, fontFamily: Fonts.Roboto400,fontSize:FONT_SIZE.small}}>
               MyBooks
             </Text>
           </View>
