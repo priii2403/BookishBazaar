@@ -50,13 +50,11 @@ export default function Index() {
   };
 
   const renderRadioOptions = ({item}) => {
-
     return (
       <View style={styles.associationView}>
         <View>
           <TouchableOpacity
             onPress={() => setcondition(item)}
-    
             activeOpacity={0.5}
             style={styles.radioView}>
             <View style={styles.mRight5}>
@@ -81,13 +79,11 @@ export default function Index() {
     );
   };
   const renderSellingOptions = ({item}) => {
-
     return (
       <View style={styles.associationView}>
         <View>
           <TouchableOpacity
             onPress={() => setsellingoption(item)}
-      
             activeOpacity={0.5}
             style={styles.radioView}>
             <View style={styles.mRight5}>
@@ -182,7 +178,7 @@ export default function Index() {
                   showMenu={showStage}
                   toggleMenu={toggleStageMenu}
                   label={'Select Book Catogroy'}
-                  placeholderText={'Select Stage'}
+                  placeholderText={'Select Catogroy'}
                   items={industries}
                   valueExtractor={'name'}
                   value={addCatogory}
@@ -258,16 +254,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: Metrics.rfv(5),
-
   },
   mainView: {
-   
     marginLeft: Metrics.rfv(20),
     marginRight: Metrics.rfv(20),
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     marginVertical: Metrics.rfv(5),
-
   },
   textInput: {
     flex: 1,
@@ -311,12 +304,10 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
     backgroundColor: colors.white,
-    // marginBottom:Metrics.rfv(0)
   },
 });
 const addBookSchema = () => {
   return Yup.object().shape({
- 
     BookName: Yup.string().trim(),
     AuthorName: Yup.string().trim(),
     BookEdition: Yup.number().nullable(),
