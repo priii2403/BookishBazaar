@@ -22,27 +22,25 @@ export default function Index(props) {
   const [isLoading, setIsLoading] = useState(false);
   const initialLoginForm = {mobileNumber: '', password: ''};
   const [hidePass, setHidePass] = useState(true);
-const NavigateToSignUP =()=>{}
+  const NavigateToSignUP = () => {};
   const submitLogin = async values => {
-    console.log(values)
+    console.log(values);
     // Keyboard.dismiss();
     setIsLoading(true);
-    axios.post('http://localhost:3000/users/login',values, {
-      headers: {
+    axios
+      .post('http://localhost:3000/users/login', values, {
+        headers: {
           'Content-Type': 'application/json',
-         
-      },      
-  })      
-  .then((response) => {
-    console.log('response',response.data)
-
-  })
-  .catch((error) => {
-    console.log('error',error)
-    alert('error',error)
-    dispatch(userUpdateProfileFail())
-
-  })
+        },
+      })
+      .then(response => {
+        console.log('response', response.data);
+      })
+      .catch(error => {
+        console.log('error', error);
+        alert('error', error);
+        dispatch(userUpdateProfileFail());
+      });
     setIsLoading(false);
   };
 
@@ -137,7 +135,6 @@ const NavigateToSignUP =()=>{}
           </View>
           {renderLoginInputs()}
         </View>
- 
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -219,8 +216,6 @@ const styles = StyleSheet.create({
 });
 
 const loginValidationSchema = yup.object().shape({
-  mobileNumber: yup
-    .number()
-    .required('mobile no is Required'),
+  mobileNumber: yup.number().required('mobile no is Required'),
   password: yup.string().required('Password is required'),
 });
