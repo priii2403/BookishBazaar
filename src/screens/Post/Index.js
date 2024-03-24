@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     marginRight: Metrics.rfv(0),
     paddingVertical: Metrics.rfv(0),
     paddingHorizontal: Metrics.rfv(0),
-    color: 'blue',
+    color: colors.black,
     fontFamily: Fonts.Roboto400,
     fontSize: FONT_SIZE.small_medium,
   },
