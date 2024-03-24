@@ -88,7 +88,7 @@ export default function Index(props) {
                 />
               </View>
               <AppButton
-                text={'Login'}
+                text={'SignUp'}
                 onPress={handleSubmit}
                 disabled={!isValid}
                 isLoading={isLoading}
@@ -127,16 +127,14 @@ export default function Index(props) {
             <View style={styles.topTextView}>
               <Text style={styles.headerText}>Sign Up</Text>
             </View>
-            <View style={styles.bottomTextView}>
-              <Text style={styles.headerText1}>{"Let's begin !"}</Text>
-            </View>
+         
           </View>
           {renderLoginInputs()}
         </View>
-        <View style={{marginTop: 10, flexDirection: 'row'}}>
+        <View style={{marginTop: 10, flexDirection: 'row',justifyContent:'center'}}>
           <Text>Already have a account?</Text>
           <TouchableOpacity style={{marginLeft: 5}} onPress={NavigateToLogin}>
-            <Text style={{marginLeft: 10}}>Sign In</Text>
+            <Text style={{marginLeft: 5,     color:colors.primary}}>Sign In</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

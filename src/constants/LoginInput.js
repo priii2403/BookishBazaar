@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Roboto400,
     fontSize: FONT_SIZE.small,
     color: colors.black,
+    marginLeft: Metrics.rfv(10),
   },
   eyeIcon: {
     marginLeft: !Platform.isPad ? 0 : Metrics.rfv(10),

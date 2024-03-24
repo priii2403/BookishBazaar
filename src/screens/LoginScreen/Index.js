@@ -67,8 +67,8 @@ export default function Index(props) {
                 value={values?.mobileNumber}
                 iconName="cLEmail"
                 // keyboardType="Mobile-No"
-                name="mobileNumber"
-                placeholder="mobileNumber"
+                name="Mobile No"
+                placeholder="Mobile No"
                 errors={errors.mobileNumber}
                 touched={touched.mobileNumber}
               />
@@ -135,6 +135,19 @@ export default function Index(props) {
           </View>
           {renderLoginInputs()}
         </View>
+        <View
+          style={{flexDirection: 'row', marginTop: 10, alignItems: 'center',justifyContent:'center'}}>
+          <Text>Don't have an account?</Text>
+          <TouchableOpacity onPress={NavigateToSignUP}>
+            <Text
+              style={{
+                marginLeft: 5,
+                color:colors.primary
+              }}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -200,7 +213,7 @@ const styles = StyleSheet.create({
   loginBtn: {
     backgroundColor: colors.primary,
     borderRadius: Metrics.rfv(10),
-    marginTop: Metrics.rfv(60),
+    marginTop: Metrics.rfv(40),
     height: Metrics.rfv(40),
   },
   loginText: {
