@@ -110,3 +110,7 @@ export const FONT_SIZE = {
     'Electrical Contractor',
     'End User',
   ];
+  const ErrorText = props => {
+    const {errorMsg} = props;
+    return <Text style={{...styles.errorText, ...props.style}}>{errorMsg}</Text>;
+  };

@@ -20,31 +20,43 @@ import AppInput from '../../constants/AppInput';
 import {Fonts} from '../../Themes/AppTheme';
 import colors from '../../constants/colors/index';
 import ButtonsRow from '../../constants/ButtonsRow';
+import axios from 'axios';
 import * as Yup from 'yup';
 export default function Index() {
   const formRef = useRef();
+  const baseUrl = 'https://reqres.in';
   const [showStage, setShowStage] = useState(false);
   const [addCatogory, setaddCatogory] = useState([]);
   const [condition, setcondition] = useState();
-  const [sellingoption, setsellingoption] = useState();
+  const [bookCondition, setbookCondition] = useState();
   const toggleStageMenu = () => setShowStage(v => !v);
   const initialAddAccountForm = {
-    BookName: '',
-    AuthorName: '',
-    BookEdition: '',
-    BookDescription: '',
-    SelectBookCategory: null,
-    BookPrintedPrice: '',
-    BookCondition: '',
-    SellingOption: '',
-    OfferedPrice: '',
+    title: '',
+    author: '',
+    bookEdition: '',
+    description: '',
+    category: null,
+    originalPrice: '',
+    bookCondition: '',
+    sellingOption:'',
+    sellingPrice: '',
+    imageUrl: '',
   };
-  const catogory = ['architecture', '1to12'];
+ 
   console.log('addCatogory', addCatogory);
   const handleSubmitClick = async values => {
     console.log(values);
+    try {
+      const response = await axios.post('http://localhost:3000/books/registerBook', values);
+      console.log('Response:', response.data);
+      // Handle response data as needed
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle errors
+    }
   };
   const renderSetCatogory = values => {
+    formRef?.current?.setFieldValue('category', values);
     setaddCatogory([values]);
     toggleStageMenu();
   };
@@ -54,7 +66,10 @@ export default function Index() {
       <View style={styles.associationView}>
         <View>
           <TouchableOpacity
-            onPress={() => setcondition(item)}
+            onPress={() => {
+              formRef?.current?.setFieldValue('bookCondition', item);
+              setcondition(item);
+            }}
             activeOpacity={0.5}
             style={styles.radioView}>
             <View style={styles.mRight5}>
@@ -78,12 +93,15 @@ export default function Index() {
       </View>
     );
   };
-  const renderSellingOptions = ({item}) => {
+  const renderbookConditions = ({item}) => {
     return (
       <View style={styles.associationView}>
         <View>
           <TouchableOpacity
-            onPress={() => setsellingoption(item)}
+            onPress={() => {
+              formRef?.current?.setFieldValue('sellingOption', item);
+              setbookCondition(item);
+            }}
             activeOpacity={0.5}
             style={styles.radioView}>
             <View style={styles.mRight5}>
@@ -91,7 +109,7 @@ export default function Index() {
                 name={
                   // customField?.[getCustomType(customField)] == item.label
                   //don't compare with ===
-                  item === sellingoption
+                  item === bookCondition
                     ? 'radio-button-checked'
                     : 'radio-button-unchecked'
                 }
@@ -107,7 +125,12 @@ export default function Index() {
       </View>
     );
   };
-
+  const ErrorText = props => {
+    const {errorMsg} = props;
+    return (
+      <Text style={{...styles.errorText, ...props.style}}>{errorMsg}</Text>
+    );
+  };
   return (
     <KeyboardAvoidingView
       style={styles.keyboardView}
@@ -140,20 +163,24 @@ export default function Index() {
               <View>
                 <View style={styles.mainView1}>
                   <AppInput
-                    value={values.BookName}
-                    setValue={handleChange('BookEdition')}
+                    value={values.title}
+                    setValue={handleChange('title')}
                     autoCorrect={false}
                     label={'Book Name'}
                     autoCapitalize={'none'}
                     multiline
                     style={styles.textInput}
+                    onBlur={handleBlur('title')}
                   />
                 </View>
               </View>
+              {errors.title && touched.title ? (
+                <ErrorText errorMsg={errors.title} style={styles.errorText} />
+              ) : null}
               <View style={styles.mainView1}>
                 <AppInput
-                  value={values.BookName}
-                  setValue={handleChange('AuthorName')}
+                  value={values.author}
+                  setValue={handleChange('author')}
                   autoCorrect={false}
                   label={'Author Name'}
                   autoCapitalize={'none'}
@@ -163,10 +190,21 @@ export default function Index() {
               </View>
               <View style={styles.mainView1}>
                 <AppInput
-                  value={values.BookName}
-                  setValue={handleChange('BookDescription')}
+                  value={values.description}
+                  setValue={handleChange('description')}
                   autoCorrect={false}
                   label={'Book Description'}
+                  autoCapitalize={'none'}
+                  multiline
+                  style={styles.textInput}
+                />
+              </View>
+              <View style={styles.mainView1}>
+                <AppInput
+                  value={values.bookEdition}
+                  setValue={handleChange('bookEdition')}
+                  autoCorrect={false}
+                  label={'Book Edition'}
                   autoCapitalize={'none'}
                   multiline
                   style={styles.textInput}
@@ -185,10 +223,16 @@ export default function Index() {
                   handlePress={value => renderSetCatogory(value)}
                 />
               </View>
+              {errors.category  ? (
+                <ErrorText
+                  errorMsg={errors.category}
+                  style={styles.errorText}
+                />
+              ) : null}
               <View style={styles.mainView1}>
                 <AppInput
-                  value={values.BookName}
-                  setValue={handleChange('BookPrintedPrice')}
+                  value={values.originalPrice}
+                  setValue={handleChange('originalPrice')}
                   autoCorrect={false}
                   label={'Book Printed Price'}
                   autoCapitalize={'none'}
@@ -196,7 +240,12 @@ export default function Index() {
                   style={styles.textInput}
                 />
               </View>
-
+              {errors.originalPrice && touched.originalPrice ? (
+                <ErrorText
+                  errorMsg={errors.originalPrice}
+                  style={styles.errorText}
+                />
+              ) : null}
               <View style={styles.mainView}>
                 <Text style={styles.textView}>{'Book Condition'}</Text>
                 <FlatList
@@ -205,18 +254,30 @@ export default function Index() {
                   keyExtractor={(item, index) => index.toString()}
                 />
               </View>
+              {errors.bookCondition ? (
+                <ErrorText
+                  errorMsg={errors.bookCondition}
+                  style={styles.errorText}
+                />
+              ) : null}
               <View style={styles.mainView}>
                 <Text style={styles.textView}>{'Selling option'}</Text>
                 <FlatList
                   data={['Sell', 'Rent', 'Donate']}
-                  renderItem={itemData => renderSellingOptions(itemData)}
+                  renderItem={itemData => renderbookConditions(itemData)}
                   keyExtractor={(item, index) => index.toString()}
                 />
               </View>
+              {errors.sellingOption && touched.sellingOption ? (
+                <ErrorText
+                  errorMsg={errors.sellingOption}
+                  style={styles.errorText}
+                />
+              ) : null}
               <View style={styles.mainView1}>
                 <AppInput
-                  value={values.BookName}
-                  setValue={handleChange('OfferedPrice')}
+                  value={values.sellingPrice}
+                  setValue={handleChange('sellingPrice')}
                   autoCorrect={false}
                   label={'Offered Price'}
                   autoCapitalize={'none'}
@@ -224,6 +285,29 @@ export default function Index() {
                   style={styles.textInput}
                 />
               </View>
+              {errors.sellingPrice && touched.sellingPrice ? (
+                <ErrorText
+                  errorMsg={errors.sellingPrice}
+                  style={styles.errorText}
+                />
+              ) : null}
+              <View style={styles.mainView1}>
+                <AppInput
+                  value={values.imageUrl}
+                  setValue={handleChange('imageUrl')}
+                  autoCorrect={false}
+                  label={'imageUrl'}
+                  autoCapitalize={'none'}
+                  multiline
+                  style={styles.textInput}
+                />
+              </View>
+              {errors.imageUrl && touched.imageUrl ? (
+                <ErrorText
+                  errorMsg={errors.imageUrl}
+                  style={styles.errorText}
+                />
+              ) : null}
               <ButtonsRow
                 // disable={!isValid || loading}
                 btnTextOne={'Add '}
@@ -305,17 +389,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  errorText: {
+    marginHorizontal: Metrics.rfv(20),
+    color: 'red',
+  },
 });
 const addBookSchema = () => {
   return Yup.object().shape({
-    BookName: Yup.string().trim(),
-    AuthorName: Yup.string().trim(),
-    BookEdition: Yup.number().nullable(),
-    BookDescription: Yup.string().trim(),
-    SelectBookCategory: Yup.string().trim(),
-    BookPrintedPrice: Yup.number().nullable(),
-    BookCondition: Yup.number().nullable(),
-    SellingOption: Yup.number().nullable(),
-    OfferedPrice: Yup.number().nullable(),
+    title: Yup.string().trim().required('please add book Name'),
+    author: Yup.string().trim(),
+    bookEdition: Yup.number().nullable(),
+    description: Yup.string().trim(),
+    category: Yup.string().trim().required('please add book Category'),
+    originalPrice: Yup.number().nullable().required('please add book price'),
+    bookCondition: Yup.string().nullable().required('please add book condition'),
+    sellingOption: Yup.string().nullable().required('please add sell option'),
+    sellingPrice: Yup.string().nullable().required('please add sell price'),
+    imageUrl: Yup.string().nullable().required('please add Image Url'),
   });
 };
