@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
-  Image
+  Image,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {Formik} from 'formik';
@@ -22,16 +22,16 @@ import AppInput from '../../constants/AppInput';
 import {Fonts} from '../../Themes/AppTheme';
 import colors from '../../constants/colors/index';
 import ButtonsRow from '../../constants/ButtonsRow';
-import { v4 as uuidv4 } from "uuid";
+import {v4 as uuidv4} from 'uuid';
 import axios from 'axios';
 import * as Yup from 'yup';
-import { storage } from '../../../firebase';
-import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
+import {storage} from '../../../firebase';
+import {uploadBytes, getDownloadURL, ref} from 'firebase/storage';
 export default function Index() {
   const formRef = useRef();
   const baseUrl = 'https://reqres.in';
   const [showStage, setShowStage] = useState(false);
-  const [showImage, setshowImage] = useState(false)
+  const [showImage, setshowImage] = useState(false);
   const [addCatogory, setaddCatogory] = useState([]);
   const [addImage, setImage] = useState([]);
   const [condition, setcondition] = useState();
@@ -46,16 +46,19 @@ export default function Index() {
     category: null,
     originalPrice: '',
     bookCondition: '',
-    sellingOption:'',
+    sellingOption: '',
     sellingPrice: '',
     imageUrl: '',
   };
- const imageCatogory =["upload from Gallery","upload from Camera"]
+  const imageCatogory = ['upload from Gallery', 'upload from Camera'];
   console.log('addCatogory', addCatogory);
   const handleSubmitClick = async values => {
     console.log(values);
     try {
-      const response = await axios.post('http://localhost:3000/books/registerBook', values);
+      const response = await axios.post(
+        'http://localhost:3000/books/registerBook',
+        values,
+      );
       console.log('Response:', response.data);
       // Handle response data as needed
     } catch (error) {
@@ -71,58 +74,52 @@ export default function Index() {
     fileData: '',
     fileUri: '',
   });
-  const getUrlFromFirebase = async (image) => {
-    console.log("insidwee")
+  const getUrlFromFirebase = async image => {
+    console.log('insidwee');
     // if (imageUpload == null) return;
     const storageRef = ref(storage, `Img/${1}`);
-    console.log("storageRef",storageRef)
+    console.log('storageRef', storageRef);
     try {
       const snapshot = await uploadBytes(storageRef, image);
-      console.log("snapshot",snapshot)
+      console.log('snapshot', snapshot);
       const url = await getDownloadURL(snapshot.ref);
-      console.log("url",url)
+      console.log('url', url);
       return url;
     } catch (error) {
-      console.log("error",error)
-      console.error("Error uploading image:", error);
+      console.log('error', error);
+      console.error('Error uploading image:', error);
       throw error;
     }
   };
-  const launchImageLibrary = async() => {
-
+  const launchImageLibrary = async () => {
     let options = {
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary (options, response => {
-
+    ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
-
       } else if (response.error) {
-    
       } else if (response.customButton) {
-
         alert(response.customButton);
       } else {
-        const source = { uri: response.uri };
+        const source = {uri: response.uri};
         async function uploadImageToFirebase() {
           const imageUrl = await getUrlFromFirebase(response.assets[0].uri);
           setState(prevState => ({
             ...prevState,
             filepath: imageUrl,
-            fileData:response.assets[0].uri,
+            fileData: response.assets[0].uri,
             fileUri: imageUrl,
           }));
-      }
-      uploadImageToFirebase();
+        }
+        uploadImageToFirebase();
       }
     });
   };
 
   const launchCamera = () => {
-
     let options = {
       storageOptions: {
         skipBackup: true,
@@ -130,43 +127,33 @@ export default function Index() {
       },
     };
     ImagePicker.launchCamera(options, response => {
-     
       if (response.didCancel) {
-
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else {
-        const source = { uri: response.uri };
+        const source = {uri: response.uri};
         async function uploadImageToFirebase() {
           const imageUrl = await getUrlFromFirebase(response.assets[0].uri);
           setState(prevState => ({
             ...prevState,
             filepath: imageUrl,
-            fileData:response.assets[0].uri,
+            fileData: response.assets[0].uri,
             fileUri: imageUrl,
           }));
+        }
+        uploadImageToFirebase();
       }
-      uploadImageToFirebase();}
     });
   };
 
   const renderFileData = () => {
-    console.log("state.fileData",state.fileData)
+    console.log('state.fileData', state.fileData);
     if (state.fileData) {
-      return (
-        <Image
-          source={{ uri:state.fileData }}
-          style={styles.images}
-        />
-      );
-    } else {
-      return (
-        <Image source={require('../../Assets/1.png')} style={styles.images} />
-      );
-    }
+      return <Image source={{uri: state.fileData}} style={styles.images} />;
+    } 
   };
 
   const renderSetCatogory = values => {
@@ -177,12 +164,12 @@ export default function Index() {
   const renderSetImage = values => {
     // formRef?.current?.setFieldValue('category', values);
     setImage([values]);
-    console.log(addImage)
-if (addImage[0] === 'upload from Gallery') {
-  launchCamera();
-} else {
-  launchImageLibrary();
-}
+    console.log(addImage);
+    if (addImage[0] === 'upload from Gallery') {
+      launchCamera();
+    } else {
+      launchImageLibrary();
+    }
     toggleImageMenu();
   };
 
@@ -348,7 +335,7 @@ if (addImage[0] === 'upload from Gallery') {
                   handlePress={value => renderSetCatogory(value)}
                 />
               </View>
-              {errors.category  ? (
+              {errors.category ? (
                 <ErrorText
                   errorMsg={errors.category}
                   style={styles.errorText}
@@ -417,7 +404,7 @@ if (addImage[0] === 'upload from Gallery') {
                 />
               ) : null}
               <View style={styles.mainView}>
-              <AppPickerV2
+                <AppPickerV2
                   showMenu={showImage}
                   label={'Select Image'}
                   placeholderText={'upload image'}
@@ -428,29 +415,25 @@ if (addImage[0] === 'upload from Gallery') {
                   handlePress={value => renderSetImage(value)}
                 />
               </View>
-
-            
+              {state.fileData && 
               <View style={styles.ImageSections}>
-        <View style={styles.mainView}>
-          {renderFileData()}
-          
-        </View>
-        </View>
+                <View style={styles.mainView}>{renderFileData()}</View>
+              </View>
+              }
               {errors.imageUrl && touched.imageUrl ? (
                 <ErrorText
                   errorMsg={errors.imageUrl}
                   style={styles.errorText}
                 />
               ) : null}
-              <View style={{marginTop:50}}> 
-
-              <ButtonsRow
-                // disable={!isValid || loading}
-                btnTextOne={'Add '}
-                btnTextTwo={'Cancel'}
-                onPressOne={handleSubmit}
-                // onPressTwo={toggleAlert}
-              />
+              <View style={{marginTop:state.fileData &&   50}}>
+                <ButtonsRow
+                  // disable={!isValid || loading}
+                  btnTextOne={'Add '}
+                  btnTextTwo={'Cancel'}
+                  onPressOne={handleSubmit}
+                  // onPressTwo={toggleAlert}
+                />
               </View>
             </View>
           )}
@@ -540,8 +523,8 @@ const styles = StyleSheet.create({
   ImageSections: {
     display: 'flex',
     flexDirection: 'row',
-   height:50,
-   width:10,
+    height: 50,
+    width: 10,
     // justifyContent: 'center',
   },
 });
@@ -553,7 +536,9 @@ const addBookSchema = () => {
     description: Yup.string().trim(),
     category: Yup.string().trim().required('please add book Category'),
     originalPrice: Yup.number().nullable().required('please add book price'),
-    bookCondition: Yup.string().nullable().required('please add book condition'),
+    bookCondition: Yup.string()
+      .nullable()
+      .required('please add book condition'),
     sellingOption: Yup.string().nullable().required('please add sell option'),
     sellingPrice: Yup.string().nullable().required('please add sell price'),
     imageUrl: Yup.string().nullable().required('please add Image Url'),
