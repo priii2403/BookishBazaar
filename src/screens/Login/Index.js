@@ -1,46 +1,48 @@
-import React, {useState} from 'react';
 import {
   View,
-  StyleSheet,
-  StatusBar,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Keyboard,
-  TouchableOpacity,
   Text,
-  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  StatusBar,
+  ScrollView,
 } from 'react-native';
-import {Colors, FONT_SIZE, Fonts} from '../../Themes/AppTheme';
+import React, {useState} from 'react';
+import colors from '../../constants/colors/index';
+// import Metrics from '../../Themes/Metrics';
+import {Fonts} from '../../Themes/AppTheme';
+import {FONT_SIZE} from '../../constants/utils/index';
 import {Formik} from 'formik';
-
+import * as yup from 'yup';
+import LoginInput from '../../constants/LoginInput';
+import AppButton from '../../constants/AppButton';
 import Metrics from '../../Themes/Metrics';
-import {loginValidationSchema} from '../../Helpers/Validator';
-// import {useDispatch} from 'react-redux';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Clipboard from '@react-native-clipboard/clipboard';
-// import messaging from '@react-native-firebase/messaging';
-import {showMessage} from '../../store/actions';
-import FastImage from 'react-native-fast-image';
-
-// import {login} from '../../store/AppStore/auth/actions';
-// import AppButton from '../../Components/AppButton';
-// import LoginInput from '../../Components/LoginInput';
-import AppButton from '../../../src/constants/AppButton';
-import colors from '../../../src/constants/colors/index';
-import LoginInput from '../../../src/constants/LoginInput';
-
-const LoginScreen = () => {
-
+import axios from 'axios';
+export default function Index(props) {
   const [isLoading, setIsLoading] = useState(false);
-  const initialLoginForm = {email: '', password: ''};
+  const initialLoginForm = {mobileNumber: '', password: ''};
   const [hidePass, setHidePass] = useState(true);
-
-
+  const NavigateToSignUP = () => {
+    props.navigation.navigate('SignUp');
+  };
   const submitLogin = async values => {
-    Keyboard.dismiss();
+    console.log(values);
+    // Keyboard.dismiss();
     setIsLoading(true);
-
+    axios
+      .post('http://localhost:3000/users/login', values, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        console.log('response', response.data.user);
+      })
+      .catch(error => {
+        console.log('error', error);
+        alert('error', error);
+        dispatch(userUpdateProfileFail());
+      });
     setIsLoading(false);
   };
 
@@ -62,15 +64,15 @@ const LoginScreen = () => {
           }) => (
             <>
               <LoginInput
-                onChangeText={handleChange('mobile_no')}
-                onBlur={handleBlur('mobile_no')}
-                value={values?.email}
+                onChangeText={handleChange('mobileNumber')}
+                onBlur={handleBlur('mobileNumber')}
+                value={values?.mobileNumber}
                 iconName="cLEmail"
                 // keyboardType="Mobile-No"
-                name="mobile_no"
+                name="Mobile No"
                 placeholder="Mobile No"
-                errors={errors.email}
-                touched={touched.email}
+                errors={errors.mobileNumber}
+                touched={touched.mobileNumber}
               />
 
               <View style={styles.mTop10}>
@@ -92,8 +94,8 @@ const LoginScreen = () => {
               <AppButton
                 text={'Login'}
                 onPress={handleSubmit}
-                // disabled={!isValid}
-                // isLoading={isLoading}
+                disabled={!isValid}
+                isLoading={isLoading}
                 style={styles.loginBtn}
                 textStyle={styles.loginText}
               />
@@ -111,39 +113,57 @@ const LoginScreen = () => {
       enabled>
       <StatusBar barStyle={'dark-content'} translucent={true} hidden />
       {/* <ImageBackground
-        style={styles.image}
-        source={require('../../Assets/Media/LoginBG.png')}
-        > */}
-        <ScrollView
-          overScrollMode={'never'}
-          style={styles.flex1}
-          keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.mainContainer}>
-          <View style={styles.alignCenter}>
-            {/* <FastImage
-              style={styles.logoImg}
-              resizeMode={'contain'}
-              source={require('../../Assets/Media/CustomIcons/logos/Logo.gif')}
-            /> */}
-            <View style={styles.headerContainer}>
-              <View style={styles.topTextView}>
-                <Text style={styles.headerText}>welcome back</Text>
-              </View>
-              <View style={styles.bottomTextView}>
-                <Text style={styles.headerText1}>{"Let's begin !"}</Text>
-              </View>
+          style={styles.image}
+          source={require('../../Assets/Media/LoginBG.png')}
+          > */}
+      <ScrollView
+        overScrollMode={'never'}
+        style={styles.flex1}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={styles.mainContainer}>
+        <View style={styles.alignCenter}>
+          {/* <FastImage
+                style={styles.logoImg}
+                resizeMode={'contain'}
+                source={require('../../Assets/Media/CustomIcons/logos/Logo.gif')}
+              /> */}
+          <View style={styles.headerContainer}>
+            <View style={styles.topTextView}>
+              <Text style={styles.headerText}>welcome back</Text>
             </View>
-            {renderLoginInputs()}
+            <View style={styles.bottomTextView}>
+              <Text style={styles.headerText1}>{"Let's begin !"}</Text>
+            </View>
           </View>
-        </ScrollView>
+          {renderLoginInputs()}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>Don't have an account?</Text>
+          <TouchableOpacity onPress={NavigateToSignUP}>
+            <Text
+              style={{
+                marginLeft: 5,
+                color: colors.primary,
+              }}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
   },
   flex1: {
     flex: 1,
@@ -177,14 +197,14 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: Fonts.Roboto700,
     fontSize: FONT_SIZE.large,
-    color: Colors.black,
+    color: colors.black,
     textTransform: 'capitalize',
     marginBottom: Metrics.rfv(10),
   },
   headerText1: {
     fontFamily: Fonts.Roboto500,
     fontSize: FONT_SIZE.small_medium,
-    color: Colors.black,
+    color: colors.black,
   },
   logoImg: {
     height: Metrics.rfv(100),
@@ -198,9 +218,9 @@ const styles = StyleSheet.create({
     marginBottom: Metrics.rfv(10),
   },
   loginBtn: {
-    backgroundColor:'black',
+    backgroundColor: colors.primary,
     borderRadius: Metrics.rfv(10),
-    marginTop: Metrics.rfv(60),
+    marginTop: Metrics.rfv(40),
     height: Metrics.rfv(40),
   },
   loginText: {
@@ -210,9 +230,12 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     borderWidth: Metrics.rfv(1),
-    borderColor: Colors.greyTheme2,
+    borderColor: colors.greyTheme2,
     borderRadius: Metrics.rfv(6),
   },
 });
 
-export default LoginScreen;
+const loginValidationSchema = yup.object().shape({
+  mobileNumber: yup.number().required('mobile no is Required'),
+  password: yup.string().required('Password is required'),
+});

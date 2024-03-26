@@ -42,7 +42,9 @@ export default function Index(props) {
       });
     setIsLoading(false);
   };
-  const NavigateToLogin = () => {};
+  const NavigateToLogin = () => {
+    props.navigation.navigate('Login');
+  };
   const renderLoginInputs = () => {
     return (
       <View style={styles.loginContainer}>
@@ -127,14 +129,18 @@ export default function Index(props) {
             <View style={styles.topTextView}>
               <Text style={styles.headerText}>Sign Up</Text>
             </View>
-         
           </View>
           {renderLoginInputs()}
         </View>
-        <View style={{marginTop: 10, flexDirection: 'row',justifyContent:'center'}}>
+        <View
+          style={{
+            marginTop: 10,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
           <Text>Already have a account?</Text>
           <TouchableOpacity style={{marginLeft: 5}} onPress={NavigateToLogin}>
-            <Text style={{marginLeft: 5,     color:colors.primary}}>Sign In</Text>
+            <Text style={{marginLeft: 5, color: colors.primary}}>Sign In</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

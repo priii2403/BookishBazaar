@@ -9,7 +9,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar, View, Text, StyleSheet} from 'react-native';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import colors from './constants/colors';
-import StackNavigation from './navigation/StackNavigation';
+import StackNavigation from './navigation/HomeStackNavigation';
 import RootNavigation from './navigation/RootNavigation';
 const theme = {
   ...DefaultTheme,
@@ -22,7 +22,7 @@ const App = () => {
     // <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
     // <StatusBar backgroundColor={colors.primary} />
     <PaperProvider theme={theme}>
-    <RootNavigation />
+      <RootNavigation />
     </PaperProvider>
   );
 };

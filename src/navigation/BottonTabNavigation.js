@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home/index';
+import Home from '../screens/Home/Index';
 import User from '../screens/User/Index';
 import Category from '../screens/Category/Index';
 import MyBooks from '../screens/MyBooks/Index';
@@ -9,7 +9,7 @@ import Post from '../screens/Post/Index';
 import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Metrics from '../Themes/Metrics';
-import { Fonts, FONT_SIZE} from '../Themes/AppTheme';
+import {Fonts, FONT_SIZE} from '../Themes/AppTheme';
 import colors from '../constants/colors/index';
 
 const Tab = createBottomTabNavigator();
@@ -59,7 +59,7 @@ const BottonTabNavigation = () => (
               style={{
                 color: focused ? colors.primary : colors.black,
                 fontFamily: Fonts.Roboto400,
-                fontSize:FONT_SIZE.small
+                fontSize: FONT_SIZE.small,
               }}>
               Home
             </Text>
@@ -78,7 +78,7 @@ const BottonTabNavigation = () => (
             <Text
               style={{
                 color: focused ? '#1A8BF5' : colors.black,
-                fontSize:FONT_SIZE.small,
+                fontSize: FONT_SIZE.small,
                 fontFamily: Fonts.Roboto400,
               }}>
               User
@@ -116,7 +116,7 @@ const BottonTabNavigation = () => (
               style={{
                 color: focused ? '#1A8BF5' : colors.black,
                 fontFamily: Fonts.Roboto400,
-                fontSize:FONT_SIZE.small
+                fontSize: FONT_SIZE.small,
               }}>
               Category
             </Text>
@@ -132,7 +132,12 @@ const BottonTabNavigation = () => (
           <View
             style={{alignItems: 'center', justifyContent: 'center', top: 10}}>
             <Icon name={'bookshelf'} size={Metrics.rfv(25)} />
-            <Text style={{color: focused ? '#1A8BF5' : colors.black, fontFamily: Fonts.Roboto400,fontSize:FONT_SIZE.small}}>
+            <Text
+              style={{
+                color: focused ? '#1A8BF5' : colors.black,
+                fontFamily: Fonts.Roboto400,
+                fontSize: FONT_SIZE.small,
+              }}>
               MyBooks
             </Text>
           </View>
