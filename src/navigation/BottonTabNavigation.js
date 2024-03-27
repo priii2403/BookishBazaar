@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Image, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home/index'
+import Home from '../screens/Home/Index';
 import User from '../screens/User/Index';
 import Category from '../screens/Category/Index';
 import MyBooks from '../screens/MyBooks/Index';

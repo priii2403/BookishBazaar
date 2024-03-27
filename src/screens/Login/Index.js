@@ -18,15 +18,19 @@ import LoginInput from '../../constants/LoginInput';
 import AppButton from '../../constants/AppButton';
 import Metrics from '../../Themes/Metrics';
 import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux';
+import {login, logout} from '../../reduxToolkit/authSlice';
+
 export default function Index(props) {
   const [isLoading, setIsLoading] = useState(false);
   const initialLoginForm = {mobileNumber: '', password: ''};
   const [hidePass, setHidePass] = useState(true);
+  const dispatch = useDispatch();
+
   const NavigateToSignUP = () => {
     props.navigation.navigate('SignUp');
   };
   const submitLogin = async values => {
-    console.log(values);
     // Keyboard.dismiss();
     setIsLoading(true);
     axios
@@ -37,6 +41,8 @@ export default function Index(props) {
       })
       .then(response => {
         console.log('response', response.data.user);
+        console.log('token', response.data.token);
+        dispatch(login(response.data));
       })
       .catch(error => {
         console.log('error', error);

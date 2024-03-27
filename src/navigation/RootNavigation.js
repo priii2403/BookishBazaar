@@ -1,18 +1,18 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeStackNavigation from './HomeStackNavigation';
 import BottonTabNavigation from './BottonTabNavigation';
-import Login from '../screens/Login/Index';
-import SignUp from '../screens/SignUp/Index';
 import SignUpStackNavigation from './SignUpStackNavigation';
-const userLogin = false;
+import {useSelector} from 'react-redux';
+const userLogin = true;
 export default function RootNavigation() {
+  const {isAuthenticated} = useSelector(state => state.auth);
+  console.log('is====', isAuthenticated);
   return (
     <NavigationContainer>
       {/* <StackNavigation /> */}
       {/* <BottonTabNavigation /> */}
       {/* <HomeStackNavigation /> */}
-      {userLogin ? <SignUpStackNavigation /> : <BottonTabNavigation />}
+      {!isAuthenticated ? <SignUpStackNavigation /> : <BottonTabNavigation />}
     </NavigationContainer>
   );
 }

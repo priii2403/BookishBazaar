@@ -11,18 +11,26 @@ import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import colors from './constants/colors';
 import StackNavigation from './navigation/HomeStackNavigation';
 import RootNavigation from './navigation/RootNavigation';
+import {PersistGate} from 'redux-persist/integration/react';
+import {Provider} from 'react-redux';
+import store, {persistor} from './reduxToolkit/store';
 const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
   },
 };
+
 const App = () => {
   return (
     // <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
     // <StatusBar backgroundColor={colors.primary} />
     <PaperProvider theme={theme}>
-      <RootNavigation />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <RootNavigation />
+        </PersistGate>
+      </Provider>
     </PaperProvider>
   );
 };
